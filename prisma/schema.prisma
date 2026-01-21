@@ -1,0 +1,201 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  OWNER
+  MANAGER
+  ADMIN
+}
+
+enum JobStatus {
+  DRAFT
+  OPEN
+  CLOSED
+  FILLED
+}
+
+enum CandidateStatus {
+  LEAD
+  CONTACTED
+  INTERVIEWING
+  OFFERED
+  PLACED
+  REJECTED
+}
+
+enum ApplicationStatus {
+  APPLIED
+  SCREENING
+  INTERVIEW
+  OFFER
+  HIRED
+  REJECTED
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String?
+  name          String?
+  role          UserRole  @default(MANAGER)
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  activities    Activity[]
+  accounts      Account[]
+  sessions      Session[]
+
+  @@index([email])
+}
+
+model Client {
+  id          String    @id @default(cuid())
+  name        String
+  industry    String?
+  description String?
+  email       String?
+  phone       String?
+  website     String?
+  metadata    Json?     @default("{}")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  jobs        Job[]
+
+  @@index([name])
+}
+
+model Job {
+  id           String    @id @default(cuid())
+  title        String
+  description  String?
+  requirements String?
+  status       JobStatus @default(DRAFT)
+  clientId     String
+  client       Client    @relation(fields: [clientId], references: [id])
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+
+  applications Application[]
+
+  @@index([clientId])
+  @@index([status])
+}
+
+model Candidate {
+  id        String          @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String          @unique
+  phone     String?
+  status    CandidateStatus @default(LEAD)
+  skills    String[]
+  metadata  Json?           @default("{}")
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  deletedAt DateTime?
+
+  applications Application[]
+  cvs          CV[]
+
+  @@index([email])
+  @@index([status])
+}
+
+model Application {
+  id          String            @id @default(cuid())
+  jobId       String
+  candidateId String
+  status      ApplicationStatus @default(APPLIED)
+  notes       String?
+  appliedAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  deletedAt   DateTime?
+
+  job         Job               @relation(fields: [jobId], references: [id])
+  candidate   Candidate         @relation(fields: [candidateId], references: [id])
+
+  @@unique([jobId, candidateId])
+  @@index([jobId])
+  @@index([candidateId])
+  @@index([status])
+}
+
+model CV {
+  id          String    @id @default(cuid())
+  candidateId String
+  fileName    String
+  gcsUrl      String
+  fileSize    Int?
+  uploadedAt  DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  candidate   Candidate @relation(fields: [candidateId], references: [id])
+
+  @@index([candidateId])
+}
+
+model Activity {
+  id         String   @id @default(cuid())
+  userId     String
+  action     String
+  entityType String
+  entityId   String
+  metadata   Json?    @default("{}")
+  createdAt  DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([entityType, entityId])
+}
+
+// NextAuth Models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}

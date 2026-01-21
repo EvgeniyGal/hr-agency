@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { ExportButton } from "@/components/reports/ExportButton";
 import { DashboardCharts } from "@/components/dashboard/DashboardCharts";
 
+export const dynamic = 'force-dynamic';
+
 export default async function ReportsPage() {
     const [jobs, candidates, clients, jobStatusRaw, candidateStatusRaw] = await Promise.all([
         prisma.job.findMany({

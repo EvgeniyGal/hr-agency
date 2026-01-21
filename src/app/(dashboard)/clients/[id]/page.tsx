@@ -17,6 +17,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+
 interface ClientPageProps {
     params: { id: string };
 }

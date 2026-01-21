@@ -19,6 +19,8 @@ import { AddJobDialog } from "@/components/jobs/AddJobDialog";
 import { ViewToggle } from "@/components/ui/ViewToggle";
 import JobKanbanBoard from "@/components/kanban/JobKanbanBoard";
 
+export const dynamic = 'force-dynamic';
+
 export default async function JobsPage({
     searchParams,
 }: {

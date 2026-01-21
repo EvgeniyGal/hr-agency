@@ -14,6 +14,8 @@ import { AddClientDialog } from "@/components/clients/AddClientDialog";
 
 import { SearchInput } from "@/components/ui/SearchInput";
 
+export const dynamic = 'force-dynamic';
+
 export default async function ClientsPage({
     searchParams,
 }: {

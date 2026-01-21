@@ -23,6 +23,8 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import KanbanBoard from "@/components/kanban/KanbanBoard";
 
+export const dynamic = 'force-dynamic';
+
 interface JobPageProps {
     params: { id: string };
 }

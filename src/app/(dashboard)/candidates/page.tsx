@@ -18,6 +18,8 @@ import { ViewToggle } from "@/components/ui/ViewToggle";
 import KanbanBoard from "@/components/kanban/KanbanBoard";
 import { AddCandidateDialog } from "@/components/candidates/AddCandidateDialog";
 
+export const dynamic = 'force-dynamic';
+
 export default async function CandidatesPage({
     searchParams,
 }: {

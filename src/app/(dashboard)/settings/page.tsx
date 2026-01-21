@@ -11,6 +11,8 @@ import { InviteUserDialog } from "@/components/settings/InviteUserDialog";
 import { ProfileForm } from "@/components/settings/ProfileForm";
 import { PasswordForm } from "@/components/settings/PasswordForm";
 
+export const dynamic = 'force-dynamic';
+
 export default async function SettingsPage() {
     const session = await getServerSession(authOptions);
     const users = session?.user?.role === 'OWNER' ? await getUsers() : [];

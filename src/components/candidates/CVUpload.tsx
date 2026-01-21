@@ -2,8 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Upload, FileText, X, Loader2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Upload, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { uploadCV } from '@/lib/actions/cv';
 

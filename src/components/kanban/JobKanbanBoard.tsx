@@ -13,10 +13,7 @@ import {
     DragEndEvent
 } from '@dnd-kit/core';
 import {
-    arrayMove,
-    SortableContext,
-    sortableKeyboardCoordinates,
-    verticalListSortingStrategy
+    sortableKeyboardCoordinates
 } from '@dnd-kit/sortable';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -42,7 +39,7 @@ interface Job {
 }
 
 export default function JobKanbanBoard({ jobs }: { jobs: Job[] }) {
-    const [isPending, startTransition] = useTransition();
+    const [, startTransition] = useTransition();
     const [items, setItems] = useState<{ [key: string]: Job[] }>(() => {
         const initial: { [key: string]: Job[] } = {};
         COLUMNS.forEach(col => {

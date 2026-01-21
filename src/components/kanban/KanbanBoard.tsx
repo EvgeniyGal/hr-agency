@@ -10,19 +10,14 @@ import {
     useSensor,
     useSensors,
     DragStartEvent,
-    DragOverEvent,
     DragEndEvent
 } from '@dnd-kit/core';
 import {
-    arrayMove,
-    SortableContext,
-    sortableKeyboardCoordinates,
-    verticalListSortingStrategy
+    sortableKeyboardCoordinates
 } from '@dnd-kit/sortable';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { updateApplicationStatus } from '@/lib/actions/applications';
-import { updateCandidate } from '@/lib/actions/candidates';
 import { updateCandidateStatus } from '@/lib/actions/candidates';
 import { ApplicationStatus, CandidateStatus } from '@prisma/client';
 import { toast } from 'sonner';

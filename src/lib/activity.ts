@@ -5,7 +5,7 @@ export async function logActivity(
     action: string,
     entityType: string,
     entityId: string,
-    metadata: Record<string, unknown> = {}
+    metadata: any = {}
 ) {
     return await prisma.activity.create({
         data: {

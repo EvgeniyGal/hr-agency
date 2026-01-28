@@ -62,12 +62,12 @@ export default async function DashboardPage({
             include: { user: true },
             orderBy: { createdAt: 'desc' },
         }),
-        prisma.job.groupBy({
+        (prisma.job as any).groupBy({
             by: ['status'],
             _count: true,
             where: commonWhere
         }),
-        prisma.candidate.groupBy({
+        (prisma.candidate as any).groupBy({
             by: ['status'],
             _count: true,
             where: { deletedAt: null }
@@ -78,8 +78,8 @@ export default async function DashboardPage({
         })
     ]);
 
-    const jobStats = jobStatusRaw.map(s => ({ name: s.status, value: s._count }));
-    const candidateStats = candidateStatusRaw.map(s => ({ name: s.status, value: s._count }));
+    const jobStats = jobStatusRaw.map((s: any) => ({ name: s.status, value: s._count }));
+    const candidateStats = candidateStatusRaw.map((s: any) => ({ name: s.status, value: s._count }));
 
     const stats = [
         { label: "Active Clients", value: clientCount, icon: Building2, color: "text-blue-600", bg: "bg-blue-50" },
@@ -131,7 +131,7 @@ export default async function DashboardPage({
                             {recentApplications.length === 0 ? (
                                 <div className="text-sm text-slate-400 py-4">No recent applications found.</div>
                             ) : (
-                                recentApplications.map((app) => (
+                                recentApplications.map((app: any) => (
                                     <div key={app.id} className="flex items-center justify-between p-4 rounded-xl border border-slate-100 hover:border-purple-200 hover:bg-purple-50/30 transition-all cursor-pointer">
                                         <div className="flex items-center space-x-4">
                                             <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-600">
@@ -165,7 +165,7 @@ export default async function DashboardPage({
                             {systemActivities.length === 0 ? (
                                 <div className="text-sm text-slate-400 py-4">No recent activity.</div>
                             ) : (
-                                systemActivities.map((activity) => (
+                                systemActivities.map((activity: any) => (
                                     <div key={activity.id} className="flex space-x-3 text-sm">
                                         <div className={`mt-1.5 w-2 h-2 rounded-full shrink-0 ${activity.action.includes('CREATE') ? 'bg-green-500' :
                                             activity.action.includes('UPDATE') ? 'bg-blue-500' : 'bg-slate-500'

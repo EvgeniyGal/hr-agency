@@ -21,22 +21,22 @@ export default async function ReportsPage() {
             where: { deletedAt: null },
             include: { _count: { select: { jobs: true } } },
         }),
-        prisma.job.groupBy({
+        (prisma.job as any).groupBy({
             by: ['status'],
             _count: true,
             where: { deletedAt: null }
         }),
-        prisma.candidate.groupBy({
+        (prisma.candidate as any).groupBy({
             by: ['status'],
             _count: true,
             where: { deletedAt: null }
         })
     ]);
 
-    const jobStats = jobStatusRaw.map(s => ({ name: s.status, value: s._count }));
-    const candidateStats = candidateStatusRaw.map(s => ({ name: s.status, value: s._count }));
+    const jobStats = jobStatusRaw.map((s: any) => ({ name: s.status, value: s._count }));
+    const candidateStats = candidateStatusRaw.map((s: any) => ({ name: s.status, value: s._count }));
 
-    const reportData = jobs.map(job => ({
+    const reportData = jobs.map((job: any) => ({
         Position: job.title,
         Client: job.client.name,
         Status: job.status,
@@ -99,7 +99,7 @@ export default async function ReportsPage() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {jobs.map((job) => (
+                            {jobs.map((job: any) => (
                                 <TableRow key={job.id}>
                                     <TableCell className="font-medium">{job.title}</TableCell>
                                     <TableCell>{job.client.name}</TableCell>

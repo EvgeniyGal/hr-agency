@@ -14,7 +14,7 @@ export function ViewToggle() {
     const view = searchParams.get('view') || 'list';
 
     const handleToggle = (newView: string) => {
-        const params = new URLSearchParams(searchParams);
+        const params = new URLSearchParams(searchParams.toString());
         params.set('view', newView);
 
         startTransition(() => {

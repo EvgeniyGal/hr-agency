@@ -46,7 +46,7 @@ export default function LoginPage() {
                 toast.error('Invalid email or password');
             } else {
                 toast.success('Login successful!');
-                router.push('/dashboard');
+                router.push('/');
                 router.refresh();
             }
         } catch {
@@ -70,14 +70,14 @@ export default function LoginPage() {
                         <Button
                             variant="outline"
                             className="border-white/20 bg-white/5 hover:bg-white/10 text-white"
-                            onClick={() => signIn('github', { callbackUrl: '/dashboard' })}
+                            onClick={() => signIn('github', { callbackUrl: '/' })}
                         >
                             GitHub
                         </Button>
                         <Button
                             variant="outline"
                             className="border-white/20 bg-white/5 hover:bg-white/10 text-white"
-                            onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
+                            onClick={() => signIn('google', { callbackUrl: '/' })}
                         >
                             Google
                         </Button>

@@ -23,11 +23,12 @@ export const dynamic = 'force-dynamic';
 export default async function CandidatesPage({
     searchParams,
 }: {
-    searchParams: { q?: string; status?: string; view?: string };
+    searchParams: Promise<{ q?: string; status?: string; view?: string }>;
 }) {
-    const query = searchParams.q || "";
-    const status = searchParams.status as CandidateStatus | undefined;
-    const view = searchParams.view || "list";
+    const resolvedParams = await searchParams;
+    const query = resolvedParams.q || "";
+    const status = resolvedParams.status as CandidateStatus | undefined;
+    const view = resolvedParams.view || "list";
 
     const candidates = await prisma.candidate.findMany({
         where: {

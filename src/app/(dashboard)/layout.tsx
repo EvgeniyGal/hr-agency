@@ -16,12 +16,12 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const sidebarLinks = [
-    { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/dashboard/clients", label: "Clients", icon: Building2 },
-    { href: "/dashboard/jobs", label: "Jobs", icon: Briefcase },
-    { href: "/dashboard/candidates", label: "Candidates", icon: Users },
-    { href: "/dashboard/reports", label: "Reports", icon: TrendingUp },
-    { href: "/dashboard/settings", label: "Settings", icon: Settings },
+    { href: "/", label: "Dashboard", icon: LayoutDashboard },
+    { href: "/clients", label: "Clients", icon: Building2 },
+    { href: "/jobs", label: "Jobs", icon: Briefcase },
+    { href: "/candidates", label: "Candidates", icon: Users },
+    { href: "/reports", label: "Reports", icon: TrendingUp },
+    { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 export default async function DashboardLayout({

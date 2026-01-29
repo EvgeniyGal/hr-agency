@@ -21,6 +21,8 @@ import { updateApplicationStatus } from '@/lib/actions/applications';
 import { updateCandidateStatus } from '@/lib/actions/candidates';
 import { ApplicationStatus, CandidateStatus } from '@prisma/client';
 import { toast } from 'sonner';
+import KanbanColumn from '@/components/kanban/KanbanColumn';
+import DraggableCard from '@/components/kanban/DraggableCard';
 
 // Unified status type
 const APP_COLUMNS = [
@@ -127,34 +129,27 @@ export default function KanbanBoard({ candidates, isGlobal = false }: { candidat
                 onDragEnd={handleDragEnd}
             >
                 {columns.map((column) => (
-                    <div key={column.id} id={column.id} className="flex flex-col w-72 shrink-0 group">
-                        <div className="flex items-center justify-between mb-4 px-2">
-                            <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest">{column.title}</h3>
-                            <Badge variant="secondary" className="bg-slate-200 text-slate-600 text-[10px]">
-                                {items[column.id]?.length || 0}
-                            </Badge>
-                        </div>
-                        <div className="flex-1 bg-slate-100/40 rounded-2xl p-3 border-2 border-dashed border-transparent group-hover:border-slate-200 transition-colors min-h-[500px]">
-                            <div className="space-y-4">
-                                {items[column.id]?.map((candidate) => (
-                                    <Card key={candidate.id} id={candidate.id} className="shadow-sm border-none hover:shadow-xl hover:scale-[1.02] transition-all cursor-grab active:cursor-grabbing ring-1 ring-slate-200/60 overflow-hidden">
-                                        <CardContent className="p-4">
-                                            {candidate.job && <p className="text-[10px] font-bold text-blue-600 uppercase mb-2">{candidate.job.title}</p>}
-                                            <div className="font-bold text-slate-900 text-sm mb-1">{candidate.firstName} {candidate.lastName}</div>
-                                            <div className="text-[11px] text-slate-500 line-clamp-1 mb-3">{candidate.email}</div>
-                                            <div className="flex flex-wrap gap-1">
-                                                {candidate.skills?.slice(0, 2).map((skill: string) => (
-                                                    <Badge key={skill} variant="outline" className="text-[9px] px-1.5 py-0 uppercase border-slate-200 text-slate-500 font-normal">
-                                                        {skill}
-                                                    </Badge>
-                                                ))}
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
+                    <KanbanColumn
+                        key={column.id}
+                        id={column.id}
+                        title={column.title}
+                        count={items[column.id]?.length || 0}
+                    >
+                        {items[column.id]?.map((candidate) => (
+                            <DraggableCard key={candidate.id} id={candidate.id}>
+                                {candidate.job && <p className="text-[10px] font-bold text-blue-600 uppercase mb-2">{candidate.job.title}</p>}
+                                <div className="font-bold text-slate-900 text-sm mb-1">{candidate.firstName} {candidate.lastName}</div>
+                                <div className="text-[11px] text-slate-500 line-clamp-1 mb-3">{candidate.email}</div>
+                                <div className="flex flex-wrap gap-1">
+                                    {candidate.skills?.slice(0, 2).map((skill: string) => (
+                                        <Badge key={skill} variant="outline" className="text-[9px] px-1.5 py-0 uppercase border-slate-200 text-slate-500 font-normal">
+                                            {skill}
+                                        </Badge>
+                                    ))}
+                                </div>
+                            </DraggableCard>
+                        ))}
+                    </KanbanColumn>
                 ))}
 
                 <DragOverlay>

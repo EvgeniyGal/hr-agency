@@ -130,7 +130,7 @@ export default async function ClientDetailPage({ params }: ClientPageProps) {
                                     </div>
                                 ) : (
                                     client.jobs.map((job) => (
-                                        <Link key={job.id} href={`/dashboard/jobs/${job.id}`}>
+                                        <Link key={job.id} href={`/jobs/${job.id}`}>
                                             <Card className="hover:border-purple-200 hover:shadow-md transition-all cursor-pointer group">
                                                 <CardContent className="p-4">
                                                     <div className="flex justify-between items-start mb-2">

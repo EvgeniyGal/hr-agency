@@ -29,7 +29,7 @@ export async function createCandidate(data: z.infer<typeof candidateSchema>) {
         data: validated,
     });
 
-    revalidatePath('/dashboard/candidates');
+    revalidatePath('/candidates');
     return candidate;
 }
 
@@ -46,8 +46,8 @@ export async function updateCandidate(id: string, data: z.infer<typeof candidate
         data: validated,
     });
 
-    revalidatePath('/dashboard/candidates');
-    revalidatePath(`/dashboard/candidates/${id}`);
+    revalidatePath('/candidates');
+    revalidatePath(`/candidates/${id}`);
     return candidate;
 }
 
@@ -62,7 +62,7 @@ export async function deleteCandidate(id: string) {
         data: { deletedAt: new Date() },
     });
 
-    revalidatePath('/dashboard/candidates');
+    revalidatePath('/candidates');
     return candidate;
 }
 
@@ -75,6 +75,6 @@ export async function updateCandidateStatus(id: string, status: CandidateStatus)
         data: { status },
     });
 
-    revalidatePath('/dashboard/candidates');
+    revalidatePath('/candidates');
     return candidate;
 }

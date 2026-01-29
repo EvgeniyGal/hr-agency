@@ -28,8 +28,8 @@ export async function createJob(data: z.infer<typeof jobSchema>) {
         data: validated,
     });
 
-    revalidatePath('/dashboard/jobs');
-    revalidatePath(`/dashboard/clients/${validated.clientId}`);
+    revalidatePath('/jobs');
+    revalidatePath(`/clients/${validated.clientId}`);
     return job;
 }
 
@@ -46,8 +46,8 @@ export async function updateJob(id: string, data: z.infer<typeof jobSchema>) {
         data: validated,
     });
 
-    revalidatePath('/dashboard/jobs');
-    revalidatePath(`/dashboard/jobs/${id}`);
+    revalidatePath('/jobs');
+    revalidatePath(`/jobs/${id}`);
     return job;
 }
 
@@ -62,7 +62,7 @@ export async function deleteJob(id: string) {
         data: { deletedAt: new Date() },
     });
 
-    revalidatePath('/dashboard/jobs');
+    revalidatePath('/jobs');
     return job;
 }
 
@@ -75,6 +75,6 @@ export async function updateJobStatus(id: string, status: JobStatus) {
         data: { status },
     });
 
-    revalidatePath('/dashboard/jobs');
+    revalidatePath('/jobs');
     return job;
 }

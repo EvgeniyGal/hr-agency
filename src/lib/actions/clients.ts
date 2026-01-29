@@ -28,7 +28,7 @@ export async function createClient(data: z.infer<typeof clientSchema>) {
         data: validated,
     });
 
-    revalidatePath('/dashboard/clients');
+    revalidatePath('/clients');
     return client;
 }
 
@@ -45,8 +45,8 @@ export async function updateClient(id: string, data: z.infer<typeof clientSchema
         data: validated,
     });
 
-    revalidatePath('/dashboard/clients');
-    revalidatePath(`/dashboard/clients/${id}`);
+    revalidatePath('/clients');
+    revalidatePath(`/clients/${id}`);
     return client;
 }
 
@@ -62,6 +62,6 @@ export async function deleteClient(id: string) {
         data: { deletedAt: new Date() },
     });
 
-    revalidatePath('/dashboard/clients');
+    revalidatePath('/clients');
     return client;
 }

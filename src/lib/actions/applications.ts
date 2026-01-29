@@ -33,8 +33,8 @@ export async function createApplication(input: z.infer<typeof applicationSchema>
         },
     });
 
-    revalidatePath(`/dashboard/jobs/${data.jobId}`);
-    revalidatePath(`/dashboard/candidates/${data.candidateId}`);
+    revalidatePath(`/jobs/${data.jobId}`);
+    revalidatePath(`/candidates/${data.candidateId}`);
     return application;
 }
 
@@ -50,8 +50,8 @@ export async function updateApplicationStatus(id: string, status: ApplicationSta
         include: { job: true, candidate: true }
     });
 
-    revalidatePath(`/dashboard/jobs/${application.jobId}`);
-    revalidatePath(`/dashboard/candidates/${application.candidateId}`);
-    revalidatePath('/dashboard');
+    revalidatePath(`/jobs/${application.jobId}`);
+    revalidatePath(`/candidates/${application.candidateId}`);
+    revalidatePath('/');
     return application;
 }

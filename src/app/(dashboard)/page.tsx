@@ -18,11 +18,12 @@ export const dynamic = 'force-dynamic';
 export default async function DashboardPage({
     searchParams,
 }: {
-    searchParams: { clientId?: string; from?: string; to?: string };
+    searchParams: Promise<{ clientId?: string; from?: string; to?: string }>;
 }) {
-    const clientId = searchParams.clientId;
-    const from = searchParams.from ? new Date(searchParams.from) : undefined;
-    const to = searchParams.to ? new Date(searchParams.to) : undefined;
+    const resolvedParams = await searchParams;
+    const clientId = resolvedParams.clientId;
+    const from = resolvedParams.from ? new Date(resolvedParams.from) : undefined;
+    const to = resolvedParams.to ? new Date(resolvedParams.to) : undefined;
 
     const commonWhere = {
         deletedAt: null,

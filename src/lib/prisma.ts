@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { Pool } from 'pg';
 
 const prismaClientSingleton = () => {
     if (process.env.IS_BUILD) {
@@ -15,38 +17,13 @@ const prismaClientSingleton = () => {
             }
         }) as unknown as PrismaClient;
     }
+
+    const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+    const adapter = new PrismaPg(pool);
+
     return new PrismaClient({
+        adapter,
         log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
-    }).$extends({
-        query: {
-            $allModels: {
-                async $allOperations({ operation, args, query }) {
-                    // Automatic soft-delete filtering
-                    if (
-                        ['findMany', 'findFirst', 'findUnique', 'count', 'groupBy', 'aggregate'].includes(
-                            operation
-                        )
-                    ) {
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        (args as any).where = { ...(args as any).where, deletedAt: null };
-                    }
-                    return query(args);
-                },
-            },
-        },
-        model: {
-            $allModels: {
-                async softDelete(id: string) {
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    const model = (this as any).name;
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    return (prisma as any)[model].update({
-                        where: { id },
-                        data: { deletedAt: new Date() },
-                    });
-                },
-            },
-        },
     });
 };
 
@@ -57,6 +34,5 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 export const prisma = globalForPrisma.prisma ?? prismaClientSingleton();
-// export const prisma = {} as any; // DEBUG
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;

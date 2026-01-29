@@ -56,7 +56,7 @@ export default async function JobDetailPage({ params }: JobPageProps) {
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             {/* Breadcrumbs */}
             <div className="flex items-center gap-2 text-xs font-medium text-slate-400">
-                <Link href="/dashboard/jobs" className="hover:text-purple-600 transition-colors">Jobs</Link>
+                <Link href="/jobs" className="hover:text-purple-600 transition-colors">Jobs</Link>
                 <ChevronRight className="w-3 h-3" />
                 <span className="text-slate-900 truncate max-w-[200px]">{job.title}</span>
             </div>
@@ -76,7 +76,7 @@ export default async function JobDetailPage({ params }: JobPageProps) {
                             </Badge>
                         </div>
                         <div className="flex items-center gap-2 mt-1.5">
-                            <Link href={`/dashboard/clients/${job.client.id}`} className="flex items-center gap-1.5 text-slate-600 hover:text-blue-600 transition-colors group">
+                            <Link href={`/clients/${job.client.id}`} className="flex items-center gap-1.5 text-slate-600 hover:text-blue-600 transition-colors group">
                                 <Building2 className="w-4 h-4 text-slate-400 group-hover:text-blue-500" />
                                 <span className="font-semibold">{job.client.name}</span>
                             </Link>
